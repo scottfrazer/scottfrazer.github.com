@@ -17,3 +17,7 @@ What To Do
 ----------
 
 Comment about it on Reddit.
+
+I Write Code
+------------
+<script src="https://gist.github.com/472877.js"> </script>
