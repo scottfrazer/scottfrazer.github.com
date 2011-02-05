@@ -3,10 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>Home | Cognisant Cow</title>
-    <link href="http://fonts.googleapis.com/css?family=Vollkorn&subset=latin" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Vollkorn&amp;subset=latin" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/main.css" type="text/css">
     <link href="/feed.atom" rel="alternate" title="Recent Blog Posts" type="application/atom+xml">
-  </head>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+    <script type="text/javascript">
+    function display( text, elem ) {
+        jQuery(document).ready(function() {
+            jQuery('#' + elem).html(text);
+        });
+    }
+    </script>
+    <script type="text/javascript" src="http://scottio.us/ajax.php?function=display&amp;elem=git-commits"></script>
+</head>
   <body>
     <div class=container>
       <div class=header>
