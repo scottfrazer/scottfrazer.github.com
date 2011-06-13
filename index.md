@@ -3,26 +3,30 @@ title: Home
 layout: main
 ---
 
-A Call To Action
-================
-
-I'm about to rant on the internet!
-
-Why I'm right
--------------
-
-Because I have a web page on the internet!
-
-What To Do
-----------
-
-Comment about it on Reddit.
-
-I Write Code
+Test
 ------------
-<script src="https://gist.github.com/472877.js"> </script>
+{% highlight java %}
+import java.net.*;
+import java.io.*;
 
-Git Commits
------------
-
-<div id="git-commits"></div>
+public class serve
+{
+    public static void main(String args[])
+    {
+        try
+        {
+            ServerSocket server = new ServerSocket( 80 );
+            Socket connection = server.accept();
+            OutputStream out = connection.getOutputStream();
+            out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
+            out.write("Hello World!  My Web Server Works!".getBytes());
+            out.flush();
+            connection.close();
+        }
+        catch (Exception e)
+        {
+            System.err.println("Error: " + e);
+        }
+    }
+}
+{% endhighlight %}
