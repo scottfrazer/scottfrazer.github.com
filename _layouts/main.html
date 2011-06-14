@@ -1,49 +1,135 @@
 <!doctype html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <title>Home | Cognisant Cow</title>
-    <link href="http://fonts.googleapis.com/css?family=Vollkorn&amp;subset=latin" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="/css/main.css" type="text/css">
-    <link href="/feed.atom" rel="alternate" title="Recent Blog Posts" type="application/atom+xml">
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-    <script type="text/javascript">
-    function display( text, elem ) {
-        jQuery(document).ready(function() {
-            jQuery('#' + elem).html(text);
-        });
+    <meta charset="utf-8"> 
+    <title>Home | Scott Frazer</title> 
+    <link href="http://fonts.googleapis.com/css?family=Vollkorn&amp;subset=latin" rel="stylesheet" type="text/css"> 
+    <link href="feed.atom" rel="alternate" title="Recent Blog Posts" type="application/atom+xml"> 
+    <style type="text/css">
+    /* See HTML 5 Boilerplate for explanation on the follow CSS */
+    html, body, body div, span, object, iframe,
+    h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+    abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp,
+    small, strong, sub, sup, var, b, i, dl, dt, dd, ol, ul, li,
+    fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+    article, aside, canvas, details, figcaption, figure,
+    footer, header, hgroup, menu, nav, section, summary,
+    time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      vertical-align: baseline;
     }
-    </script>
-    <script type="text/javascript" src="http://scottio.us/ajax.php?function=display&amp;elem=git-commits"></script>
-</head>
+    article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}
+    blockquote, q { quotes: none; }
+    blockquote:before, blockquote:after,
+    q:before, q:after { content: ""; content: none; }
+    ins { background-color: #ff9; color: #000; text-decoration: none; }
+    mark { background-color: #ff9; color: #000; font-style: italic; font-weight: bold; }
+    del { text-decoration: line-through; }
+    abbr[title], dfn[title] { border-bottom: 1px dotted; cursor: help; }
+    table { border-collapse: collapse; border-spacing: 0; }
+    hr { display: block; height: 1px; border: 0; border-top: 1px solid #ccc; margin: 1em 0; padding: 0; }
+    body { font:13px/1.231 sans-serif; *font-size:small; } /* Hack retained to preserve specificity */
+    pre, code, kbd, samp { font-family: monospace, sans-serif; }
+    html { overflow-y: scroll; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+    a:hover, a:active { outline: 0; }
+    a, a:active, a:visited { color: #607890; }
+    a:hover { color: #036; }
+    ul, ol { margin-left: 2em; }
+    ol { list-style-type: decimal; }
+    nav ul, nav li { margin: 0; list-style:none; list-style-image: none; }
+    small { font-size: 85%; }
+    b, strong, th { font-weight: bold; }
+    td { vertical-align: top; }
+    sub, sup { font-size: 75%; line-height: 0; position: relative; }
+    sup { top: -0.5em; }
+    sub { bottom: -0.25em; }
+    pre {
+      white-space: pre; white-space: pre-wrap; word-wrap: break-word;
+      padding: 15px;
+    }
+    .ie6 legend, .ie7 legend { margin-left: -7px; } 
+    button, input, select, textarea { width: auto; overflow: visible; margin: 0; font-size: 100%; font-family: sans-serif; vertical-align: baseline; }
+    textarea { overflow: auto; vertical-align:text-top; }
+    label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+    input::-moz-focus-inner,
+    button::-moz-focus-inner { border: 0; padding: 0; }
+    input:valid, textarea:valid {  }
+    input:invalid, textarea:invalid { border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red; }
+    .no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
+    .ie7 img { -ms-interpolation-mode: bicubic; }
+    body, select, input, textarea {
+      color: #444;
+      /* Set your base font here, to apply evenly */
+      /* font-family: Georgia, serif;  */
+    }
+    h1, h2, h3, h4, h5, h6 { font-weight: bold; }
+    ::-moz-selection { background: #fe57a1; color:#fff; text-shadow: none; }
+    ::selection { background:#fe57a1; color:#fff; text-shadow: none; }
+    a:link { -webkit-tap-highlight-color: #FF5E99; } /* j.mp/webkit-tap-highlight-color */
+    /* end HTML 5 Boilerplate */
+
+    #static {position: fixed; top:0; left: 0; height: 40px; width: 100%; background: #ccc; text-align: center;}
+    #static-menu {position: fixed; top:40px; left: 0; height: 100px; width: 100%; background: #ccc; text-align: center;}
+    #static .content {width: 750px; margin: 0 auto; font-family: Vollkorn, Georgia, serif;}
+    #static .left {float: left; width: 50%; text-align: left; font-size: 2.2em; margin-top:3px;}
+    #static .right {float: right; width: 50%; text-align: right; font-size: 1.8em; margin-top:10px;}
+    #wrap {text-align:center;}
+    #main-body {width: 750px; margin: 0 auto; margin-top: 100px; text-align:left;}
+    </style>
+    <link rel="stylesheet" href="css/syntax.css" type="text/css"> 
+  </head>
   <body>
-    <div class=container>
-      <div class=header>
-        <a href="/about/"><span class="b">Cognisant</span> <span class="o">Cow</span></a>
+    <div id="static">
+      <div class="content">
+        <p class="left">Scott Frazer</p>
+        <p class="right"><a id="static-menu-link" href="#">Menu</a></p>
       </div>
-      <div class=navigation>
-        <ul>
-          <li><a href="/">blog</a>
-          <li><a href="/archive/">archive</a>
-          <li><a href="/tags/">tags</a>
-          <li><a href="/projects/">projects</a>
-          <li><a href="/about/">about</a>
-        </ul>
-      </div>
-      <div class=body>
-      {{ content }}
-      </div>
-      <div class=footer>
-        <p>&copy; Copyright 2011 by Scott Frazer.
-        <p>
-          Content licensed under the Creative Commons
-          attribution-noncommercial-sharealike License.
-        <p>
-          Contact me via <a href="mailto:scott.d.frazer@gmail.com">mail</a>,
-          <a href="http://twitter.com/scottious">twitter</a>,
-          <a href="http://github.com/scottfrazer">github</a> or
-        (<a href="/feed.atom" rel="alternate" title="Recent Blog Posts">feed</a>)
+      <div id="static-menu" style="display: none">
+        This is my static content
       </div>
     </div>
+    <div id="wrap">
+      <div id="main-body">
+        <h1>Coming Soon</h1>
+        {{content}}
+        <div id="disqus_thread"></div>
+        <script type="text/javascript">
+            var disqus_shortname = 'scottfrazer';
+            var disqus_identifier = 'scottfrazertest';
+            var disqus_url = 'http://scottfrazer.net/blog-post-test/';
+            (function() {
+                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+            })();
+        </script>
+        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+        <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+      </div>
+    </div>
+
+    <script src="js/libs/jquery-1.6.1.min.js"></script>
+    <script src="js/libs/jquery-ui-1.8.13.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.1.min.js"><\/script>')</script>
+    <script type="text/javascript">
+      jQuery('#static-menu-link').toggle(
+          function() {
+              $('#static-menu').effect('blind', { mode: 'show', direction: 'vertical' }, 1000);
+          },
+          function() {
+              $('#static-menu').effect('blind', { percent: 'hide', direction: 'vertical'  }, 500);
+          }
+      );
+    </script>
+    <script>
+      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
   </body>
 </html>
