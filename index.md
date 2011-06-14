@@ -4,7 +4,7 @@ layout: main
 ---
 
 Test
-------------
+====
 {% highlight java %}
 import java.net.*;
 import java.io.*;

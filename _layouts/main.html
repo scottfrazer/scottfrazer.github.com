@@ -71,13 +71,20 @@
     a:link { -webkit-tap-highlight-color: #FF5E99; } /* j.mp/webkit-tap-highlight-color */
     /* end HTML 5 Boilerplate */
 
-    #static {position: fixed; top:0; left: 0; height: 40px; width: 100%; background: #111; text-align: center; color: #efefef;}
-    #static-menu {position: fixed; top:40px; left: 0; height: 200px; width: 100%; background: #111; color: #efefef;}
+    #static {position: fixed; top:0; left: 0; height: 40px; width: 100%; background: #000; text-align: center; color: #efefef;}
     #static .content {width: 750px; margin: 0 auto; font-family: Vollkorn, Georgia, serif; color: #efefef;}
     #static .left {float: left; width: 50%; text-align: left; font-size: 2.2em; margin-top:3px;}
-    #static .right {float: right; width: 50%; text-align: right; font-size: 1.8em; margin-top:10px;}
+    #static .right {float: right; width: 50%; text-align: right; font-size: 2.2em; margin-top:3px;}
+
+    #static-menu {position: fixed; top:40px; left: 0; height: 200px; width: 100%; background: #000; color: #efefef; padding:10px 0; overflow: hidden;}
+    #static-menu .content {width: 750px; margin: 0 auto; font-family: Helvetica, Verdana, sans-serif; color: #efefef;}
+    #static-menu .content h2 {font-size: 1.2em;}
+    #static-menu .left {float: left; width: 33.3%; text-align: left; font-size: 1.1em;}
+    #static-menu .center {float: left; width: 33.3%; text-align: left; font-size: 1.1em;}
+    #static-menu .right {float: left; width: 33.3%; text-align: left; font-size: 1.1em;}
     #wrap {text-align:center;}
-    #main-body {width: 750px; margin: 0 auto; margin-top: 100px; text-align:left;}
+    #main-body {width: 750px; margin: 0 auto; margin-top: 60px; text-align:left;}
+    #main-body h1 {font-family: Vollkorn, Georgia, serif; font-size: 2.2em;}
     </style>
     <link rel="stylesheet" href="css/syntax.css" type="text/css"> 
   </head>
@@ -88,18 +95,30 @@
         <p class="right"><a id="static-menu-link" href="#">Menu</a></p>
       </div>
       <div id="static-menu" style="display: none">
-        This is my static content
+        <div class="content">
+          <div class="left">
+            <h2>Left</h2>
+            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+          </div>
+          <div class="center">
+            <h2>Center</h2>
+            <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+          </div>
+          <div class="right">
+            <h2>Right</h2>
+            <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
+          </div>
+        </div>
       </div>
     </div>
     <div id="wrap">
       <div id="main-body">
-        <h1>Coming Soon</h1>
         {{content}}
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             var disqus_shortname = 'scottfrazer';
-            var disqus_identifier = 'scottfrazertest';
-            var disqus_url = 'http://scottfrazer.net/blog-post-test/';
+            //var disqus_identifier = 'scottfrazertest';
+            //var disqus_url = 'http://scottfrazer.net/blog-post-test/';
             (function() {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
@@ -115,7 +134,8 @@
     <script src="js/libs/jquery-ui-1.8.13.min.js"></script>
     <script type="text/javascript">
       jQuery('document').ready(function() {
-        jQuery('#static-menu').css('opacity', '0.5');
+        jQuery('#static-menu').css('opacity', '0.9');
+        jQuery('#static').css('opacity', '0.9');
       });
       jQuery('#static-menu-link').toggle(
           function() {
@@ -127,10 +147,10 @@
       );
     </script>
     <script>
-      var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+      /*var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
       (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
       g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
+      s.parentNode.insertBefore(g,s)}(document,'script'));*/
     </script>
   </body>
 </html>
