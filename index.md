@@ -5,7 +5,7 @@ layout: main
 
 Test
 ====
-{% highlight java %}
+{% highlight java linenos %}
 import java.net.*;
 import java.io.*;
 
