@@ -71,9 +71,9 @@
     a:link { -webkit-tap-highlight-color: #FF5E99; } /* j.mp/webkit-tap-highlight-color */
     /* end HTML 5 Boilerplate */
 
-    #static {position: fixed; top:0; left: 0; height: 40px; width: 100%; background: #ccc; text-align: center;}
-    #static-menu {position: fixed; top:40px; left: 0; height: 100px; width: 100%; background: #ccc; text-align: center;}
-    #static .content {width: 750px; margin: 0 auto; font-family: Vollkorn, Georgia, serif;}
+    #static {position: fixed; top:0; left: 0; height: 40px; width: 100%; background: #111; text-align: center; color: #efefef;}
+    #static-menu {position: fixed; top:40px; left: 0; height: 200px; width: 100%; background: #111; color: #efefef;}
+    #static .content {width: 750px; margin: 0 auto; font-family: Vollkorn, Georgia, serif; color: #efefef;}
     #static .left {float: left; width: 50%; text-align: left; font-size: 2.2em; margin-top:3px;}
     #static .right {float: right; width: 50%; text-align: right; font-size: 1.8em; margin-top:10px;}
     #wrap {text-align:center;}
@@ -116,12 +116,15 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.1.min.js"><\/script>')</script>
     <script type="text/javascript">
+      jQuery('document').ready(function() {
+        jQuery('#static-menu').css('opacity', '0.5');
+      });
       jQuery('#static-menu-link').toggle(
           function() {
-              $('#static-menu').effect('blind', { mode: 'show', direction: 'vertical' }, 1000);
+              jQuery('#static-menu').effect('blind', { mode: 'show', direction: 'vertical' }, 500);
           },
           function() {
-              $('#static-menu').effect('blind', { percent: 'hide', direction: 'vertical'  }, 500);
+              jQuery('#static-menu').effect('blind', { percent: 'hide', direction: 'vertical'  }, 1000);
           }
       );
     </script>
