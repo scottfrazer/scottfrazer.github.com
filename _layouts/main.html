@@ -78,12 +78,14 @@
     #static .right a {text-decoration: none; color: #80b12c;}
     #static .left a {text-decoration: none; color: #eeeeee;}
     #static a:hover {color: #ffd700;}
-    #static-menu {position: fixed; top:40px; left: 0; height: 200px; width: 100%; background: #000; color: #efefef; padding:10px 0; overflow: hidden;}
-    #static-menu .content {width: 750px; margin: 0 auto; font-family: Helvetica, Verdana, sans-serif; color: #efefef;}
-    #static-menu .content h2 {font-size: 1.2em;}
-    #static-menu .left {float: left; width: 33.3%; text-align: left; font-size: 1.1em;}
-    #static-menu .center {float: left; width: 33.3%; text-align: left; font-size: 1.1em;}
-    #static-menu .right {float: left; width: 33.3%; text-align: left; font-size: 1.1em;}
+    #static-menu {position: fixed; top:40px; left: 0; height: 200px; width: 100%; background: #000; padding:10px 0; overflow: hidden;}
+    #static-menu .content {width: 750px; margin: 0 auto; font-family: Trebuchet, Verdana, sans-serif; line-height: 1.6; font-size: 1em; color: #ccc;}
+    #static-menu .content h2 {font-size: 1.2em; margin-bottom: 10px;}
+    #static-menu .left {float: left; width: 230px; text-align: left; font-size: 1.1em; padding: 0 10px;}
+    #static-menu a {text-decoration: none;}
+
+    #static-menu .content {width: 750px; height: 100%; margin: 0 auto; text-align: center;}
+
     #wrap {text-align:center;}
     #main-body {background: #fff; width: 750px; margin: 0 auto; margin-top: 40px; padding: 10px 20px; text-align:left;}
     #main-body h1 {font-family: Vollkorn, Georgia, serif; font-size: 2.2em;}
@@ -99,20 +101,9 @@
         <p class="right"><a id="static-menu-link" href="#">more</a></p>
       </div>
     </div>
-      <div id="static-menu" style="display: none">
+    <div id="static-menu" style="display: none">
       <div class="content">
-        <div class="left">
-          <h2>Left</h2>
-          <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-        </div>
-        <div class="center">
-          <h2>Center</h2>
-          <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
-        </div>
-        <div class="right">
-          <h2>Right</h2>
-          <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc.</p>
-        </div>
+        <div class="terminal"></div>
       </div>
     </div>
     <div id="wrap">
@@ -121,8 +112,8 @@
         <div id="disqus_thread"></div>
         <script type="text/javascript">
             var disqus_shortname = 'scottfrazer';
-            //var disqus_identifier = 'scottfrazertest';
-            //var disqus_url = 'http://scottfrazer.net/blog-post-test/';
+            var disqus_identifier = 'scottfrazertest';
+            var disqus_url = 'http://scottfrazer.net/blog-post-test/';
             (function() {
                 var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
                 dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
@@ -137,18 +128,42 @@
     <script src="js/libs/jquery-1.6.1.min.js"></script>
     <script src="js/libs/jquery-ui-1.8.13.min.js"></script>
     <script type="text/javascript">
-      jQuery('document').ready(function() {
-        jQuery('#static-menu').css('opacity', '0.9');
-        jQuery('#static').css('opacity', '0.9');
+      (function( $ ) {
+        $.fn.terminal = function() {
+          return this.each(function() {  
+            obj = $(this);
+            obj.html('<div class="term"></div><input type="text" class="input" />');
+            input = obj.find('.input');
+            term = obj.find('.term');
+            obj.css('height', '100%');
+            term.css('width', '100%').css('height', '95%').css('display', 'block').css('float', 'left').css('text-align', 'left');
+            input.css('width', '100%').css('height', '5%').css('float', 'left');
+            input.keypress(function(event) {
+              if ( event.which == '13' ) {
+                term.append(input.val() + '<br />')
+                input.val('')
+              }
+            });
+          });
+        };
+      })( jQuery );
+
+      $('document').ready(function() {
+        $('#static-menu').css('opacity', '0.9');
+        $('#static').css('opacity', '0.9');
+        
+        
+        $('.terminal').terminal()
       });
-      jQuery('#static-menu-link').toggle(
+
+      $('#static-menu-link').toggle(
           function() {
-              jQuery('#static-menu').effect('blind', { mode: 'show', direction: 'vertical' }, 500);
-              jQuery('#static-menu-link').text('less');
+              $('#static-menu').effect('blind', { mode: 'show', direction: 'vertical' }, 500);
+              $('#static-menu-link').text('less');
           },
           function() {
-              jQuery('#static-menu').effect('blind', { percent: 'hide', direction: 'vertical'  }, 1000);
-              jQuery('#static-menu-link').text('more');
+              $('#static-menu').effect('blind', { percent: 'hide', direction: 'vertical'  }, 1000);
+              $('#static-menu-link').text('more');
           }
       );
     </script>
