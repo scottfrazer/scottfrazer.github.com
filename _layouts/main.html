@@ -71,101 +71,132 @@
     a:link { -webkit-tap-highlight-color: #FF5E99; } /* j.mp/webkit-tap-highlight-color */
     /* end HTML 5 Boilerplate */
 
-    #static {position: fixed; top:0; left: 0; height: 40px; width: 100%; background: #000; text-align: center; color: #efefef;}
-    #static .content {width: 750px; margin: 0 auto; font-family: Vollkorn, Georgia, serif;}
-    #static .left {float: left; width: 50%; text-align: left; font-size: 2.2em; margin-top:3px;}
-    #static .right {float: right; width: 50%; text-align: right; font-size: 2.2em; margin-top:3px;}
-    #static .right a {text-decoration: none; color: #80b12c;}
-    #static .left a {text-decoration: none; color: #eeeeee;}
-    #static a:hover {color: #ffd700;}
-    #static-menu {position: fixed; top:40px; left: 0; height: 200px; width: 100%; background: #000; padding:10px 0; overflow: hidden;}
-    #static-menu .content {width: 750px; margin: 0 auto; font-family: Trebuchet, Verdana, sans-serif; line-height: 1.6; font-size: 1em; color: #ccc;}
-    #static-menu .content h2 {font-size: 1.2em; margin-bottom: 10px;}
-    #static-menu .left {float: left; width: 230px; text-align: left; font-size: 1.1em; padding: 0 10px;}
-    #static-menu a {text-decoration: none;}
-
-    #static-menu .content {width: 750px; height: 100%; margin: 0 auto; text-align: center;}
-
     #wrap {text-align:center;}
-    #main-body {background: #fff; width: 750px; margin: 0 auto; margin-top: 40px; padding: 10px 20px; text-align:left;}
-    #main-body h1 {font-family: Vollkorn, Georgia, serif; font-size: 2.2em;}
+    #center-column {background: #fff; width: 750px; margin: 20px auto; padding: 20px 20px; text-align:left; border: 4px solid #062270;}
+    #center-column h1 {font-family: Vollkorn, Georgia, serif; font-size: 2.2em;}
     body { background: #efefef; }
     .highlight { border: 1px solid #ccc; }
+    #tabs .tab .title {font-family: Vollkorn, Georgia, serif;font-size: 2.2em;font-weight: bolder; text-decoration: none; color: #333;}
+    #tabs .tab .title .expander {font-family: "Courier New";}
     </style>
     <link rel="stylesheet" href="css/syntax.css" type="text/css"> 
+    <link rel="stylesheet" href="css/jquery.qtip.css" type="text/css"> 
   </head>
   <body>
-    <div id="static">
-      <div class="content">
-        <p class="left"><a href="/">Scott D. Frazer</a></p>
-        <p class="right"><a id="static-menu-link" href="#">more</a></p>
-      </div>
-    </div>
-    <div id="static-menu" style="display: none">
-      <div class="content">
-        <div class="terminal"></div>
-      </div>
-    </div>
     <div id="wrap">
-      <div id="main-body">
-        {{content}}
-        <div id="disqus_thread"></div>
-        <script type="text/javascript">
-            var disqus_shortname = 'scottfrazer';
-            var disqus_identifier = 'scottfrazertest';
-            var disqus_url = 'http://scottfrazer.net/blog-post-test/';
-            (function() {
-                var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-                dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-            })();
-        </script>
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-      </div>
+      <div id="center-column">
+        <div id="tabs">
+          <div id="writing">
+            <div class="tab">
+              <a href="#" class="title"><span class="expander">[+]</span> Writing</a>
+            </div>
+          </div>
+          <div id="code">
+            <div class="tab">
+              <a href="#" class="title"><span class="expander">[+]</span> Code</a>
+            </div>
+          </div>
+          <div id="resume">
+            <div class="tab">
+              <a href="#" class="title"><span class="expander">[+]</span> Resume</a>
+            </div>
+          </div>
+          <div id="contact-connections">
+            <div class="tab">
+              <a href="#" class="title"><span class="expander">[+]</span> Contact &amp; Connect</a>
+            </div>
+          </div>
+        </div>
+
+      {{content}}
+
     </div>
 
     <script src="js/libs/jquery-1.6.1.min.js"></script>
     <script src="js/libs/jquery-ui-1.8.13.min.js"></script>
+    <script src="js/libs/jquery.qtip.js"></script>
     <script type="text/javascript">
-      (function( $ ) {
-        $.fn.terminal = function() {
-          return this.each(function() {  
-            obj = $(this);
-            obj.html('<div class="term"></div><input type="text" class="input" />');
-            input = obj.find('.input');
-            term = obj.find('.term');
-            obj.css('height', '100%');
-            term.css('width', '100%').css('height', '95%').css('display', 'block').css('float', 'left').css('text-align', 'left');
-            input.css('width', '100%').css('height', '5%').css('float', 'left');
-            input.keypress(function(event) {
-              if ( event.which == '13' ) {
-                term.append(input.val() + '<br />')
-                input.val('')
+
+      var urlBase = window.location.href;
+      if ( urlBase.indexOf('#') != -1 ) {
+        urlBase = urlBase.substring(0, urlBase.indexOf('#'));
+      }
+      
+      $(document).ready(function() {
+        var openTab = window.location.hash.substring(1);
+        $('#tabs > div').each(function(index, value) {
+          var id = $(value).attr('id');
+          var tabUrl = urlBase + '#' + id;
+          var content = $('<div class="content">').hide();
+          var hover = $( '<span class="hover"> (<a href="" title="This is a permalink!" class="permalink">permalink</a>) (<a href="#" title="Fancy QR Code" class="qr">qr</a>)</span>' ).hide();
+          var qtipper = $('<div />').html('<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + encodeURIComponent( tabUrl ) + '&choe=UTF-8" />').hide();
+          var permalink = hover.find('.permalink');
+          var qr = hover.find('.qr');
+          var tab = $(value).find('.tab:first');
+          var tabLink = tab.find('.title:first');
+
+          $(value).append( content );
+          $(tab).append( hover );
+          $(value).append(qtipper);
+
+          permalink.attr('href', tabUrl);
+
+          qr.qtip({
+            id: 'modal',
+            content: {
+              text: qtipper,
+              title: {
+                text: 'Modal qTip',
+                button: true
               }
-            });
+            },
+            position: {
+              my: 'center',
+              at: 'center',
+              target: $(window)
+            },
+            show: {
+              event: 'click',
+              solo: true,
+              modal: true
+            },
+            hide: false,
+            style: 'ui-tooltip-light ui-tooltip-rounded'
           });
-        };
-      })( jQuery );
 
-      $('document').ready(function() {
-        $('#static-menu').css('opacity', '0.9');
-        $('#static').css('opacity', '0.9');
-        
-        
-        $('.terminal').terminal()
-      });
-
-      $('#static-menu-link').toggle(
-          function() {
-              $('#static-menu').effect('blind', { mode: 'show', direction: 'vertical' }, 500);
-              $('#static-menu-link').text('less');
-          },
-          function() {
-              $('#static-menu').effect('blind', { percent: 'hide', direction: 'vertical'  }, 1000);
-              $('#static-menu-link').text('more');
+          if ( id == openTab ) {
+            content.show();
           }
-      );
+
+          $(value).mouseover( function(event) {
+            hover.show();
+          });
+
+          $(value).mouseout( function(event) {
+            hover.hide();
+          });
+
+          tabLink.click( function(event) {
+            if ( content.is(":visible") ) {
+              content.hide();
+              $(value).find('.expander').text('[+]');
+            } else {
+              content.show();
+              $(value).find('.expander').text('[-]');
+            }
+          });
+
+          $.ajax({
+            url: id + '.html',
+            success: function(data) {
+              $(value).find('.content').html(data);
+            }
+          });
+        });
+
+        
+
+      });
     </script>
     <script>
       /*var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
