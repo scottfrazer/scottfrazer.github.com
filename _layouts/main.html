@@ -79,13 +79,23 @@
     #tabs .tab .title {font-family: Vollkorn, Georgia, serif;font-size: 2.2em;font-weight: bolder; text-decoration: none; color: #333;}
     #tabs .tab .title .expander {font-family: "Courier New";}
     #tabs .tab a.title:hover {color:#ff7800;}
-    #tabs .content {padding: 7px;}
-    #tabs .content h2 {font-size: 1.4em; padding-bottom: 5px;}
-    #tabs .hover {font-size: 1.3em; color: #ccc;}
+    #tabs .content {font-size: 1.2em; padding: 7px;}
+    #tabs .content h2 {font-family: Vollkorn, Georgia, serif; font-size: 1.6em; padding-bottom: 5px;}
+    #tabs .hover {font-size: 1.8em; color: #ccc;}
     #tabs .hover a {text-decoration: none; color: #6d89d5;}
     #writing ul {list-style: none; margin: 0;}
     #writing li {padding: 0 0 3px 0;}
     #code .project {margin-bottom: 15px;}
+    .permalink-modal { width: 500px; font-size: 2.2em;}
+    .permalink-modal input { width: 500px; border: 1px solid #ccc; padding: 3px;}
+    #ui-tooltip-writing-perma-modal {max-width: none;}
+    #ui-tooltip-writing-qr-modal {max-width: none;}
+    #ui-tooltip-code-perma-modal {max-width: none;}
+    #ui-tooltip-code-qr-modal {max-width: none;}
+    #ui-tooltip-resume-perma-modal {max-width: none;}
+    #ui-tooltip-resume-qr-modal {max-width: none;}
+    #ui-tooltip-contact-connections-perma-modal {max-width: none;}
+    #ui-tooltip-contact-connections-qr-modal {max-width: none;}
     </style>
     <link rel="stylesheet" href="css/syntax.css" type="text/css"> 
     <link rel="stylesheet" href="css/jquery.qtip.css" type="text/css"> 
@@ -129,15 +139,16 @@
       if ( urlBase.indexOf('#') != -1 ) {
         urlBase = urlBase.substring(0, urlBase.indexOf('#'));
       }
+      var openTab = window.location.hash.substring(1);
       
       $(document).ready(function() {
-        var openTab = window.location.hash.substring(1);
         $('#tabs > div').each(function(index, value) {
           var id = $(value).attr('id');
           var tabUrl = urlBase + '#' + id;
           var content = $('<div class="content">').hide();
-          var hover = $( '<span class="hover"> (<a href="" title="This is a permalink!" class="permalink">permalink</a>) (<a href="#" title="Fancy QR Code" class="qr">qr</a>)</span>' ).hide();
-          var qtipper = $('<div />').html('<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' + encodeURIComponent( tabUrl ) + '&choe=UTF-8" />').hide();
+          var hover = $( '<span class="hover"> (<a href="#" title="This is a permalink!" class="permalink">permalink</a>) (<a href="#" title="Fancy QR Code" class="qr">qr</a>)</span>' ).hide();
+          var qtipper = $('<div />').html('<img src="https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl=' + encodeURIComponent( tabUrl ) + '&choe=UTF-8" />').hide();
+          var permalinker = $('<div />').html('<p class="permalink-modal"><input type="text" value="'+tabUrl+'" /></p>').hide();
           var permalink = hover.find('.permalink');
           var qr = hover.find('.qr');
           var tab = $(value).find('.tab:first');
@@ -146,11 +157,40 @@
           $(value).append( content );
           $(tab).append( hover );
           $(value).append(qtipper);
+          $(value).append(permalinker);
 
-          permalink.attr('href', tabUrl);
+          permalinker.click(function(event) {
+            event.focus();
+            event.select();
+          });
+
+          permalink.qtip({
+            id: id + '-perma-modal',
+            content: {
+              text: permalinker,
+              title: {
+                text: 'Permalink',
+                button: true
+              }
+            },
+            position: {
+              my: 'center',
+              at: 'center',
+              target: $(window)
+            },
+            show: {
+              event: 'click',
+              solo: true,
+              modal: true
+            },
+            hide: false,
+            style: {
+              classes: 'ui-tooltip-light ui-tooltip-rounded'
+            }
+          });
 
           qr.qtip({
-            id: 'modal',
+            id: id + '-qr-modal',
             content: {
               text: qtipper,
               title: {
@@ -177,7 +217,7 @@
           }
 
           $(value).mouseover( function(event) {
-            hover.show();
+            hover.css('display', 'inline');
           });
 
           $(value).mouseout( function(event) {
@@ -202,7 +242,7 @@
           });
         });
 
-        
+        $('a[title]').qtip();
 
       });
     </script>
