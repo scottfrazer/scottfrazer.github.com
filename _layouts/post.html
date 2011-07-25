@@ -1,16 +1,48 @@
-{{content}}
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"> 
+    <title>Home | Scott Frazer</title> 
+    <link href="http://fonts.googleapis.com/css?family=Vollkorn&amp;subset=latin" rel="stylesheet" type="text/css" />
+    <link href="feed.atom" rel="alternate" title="Recent Blog Posts" type="application/atom+xml" /> 
+    <link rel="stylesheet" href="/~scott/css/syntax.css" type="text/css" />
+    <link rel="stylesheet" href="/~scott/css/jquery.qtip.css" type="text/css" />
+    <link rel="stylesheet" href="/~scott/css/site.css" type="text/css" />
+  </head>
+  <body>
+    <div id="wrap">
+      <div id="center-column">
+      	<div id="nav-bar">
+      		<a href="http://scottfrazer.net">&laquo; Home</a>
+      	</div>
 
-<div id="disqus_thread"></div>
-<script type="text/javascript">
-    var disqus_shortname = 'scottfrazer';
-    /*var disqus_identifier = 'scottfrazertest';
-    var disqus_url = 'http://scottfrazer.net/blog-post-test/';*/
-    (function() {
-        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
+      	{{ content }}
+
+      	<div id="disqus_thread"></div>
+				<script type="text/javascript">
+				    var disqus_shortname = 'scottfrazer';
+				    /*var disqus_identifier = 'scottfrazer';
+				    var disqus_url = 'http://scottfrazer.net/blog-post-test/';*/
+				    (function() {
+				        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+				        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+				        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+				    })();
+				</script>
+				<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+				<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+			</div>
+    </div>
+
+    <script src="js/libs/jquery-1.6.1.min.js"></script>
+    <script src="js/libs/jquery-ui-1.8.13.min.js"></script>
+    <script src="js/libs/jquery.qtip.js"></script>
+    <script>
+      /*var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview'],['_trackPageLoadTime']];
+      (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+      s.parentNode.insertBefore(g,s)}(document,'script'));*/
+    </script>
+  </body>
+</html>

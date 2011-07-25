@@ -1,3 +1,8 @@
+---
+title: Home
+layout: post
+---
+
 Headline, Title, or Introduction
 ================================
 
