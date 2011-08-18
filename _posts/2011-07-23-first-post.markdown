@@ -1,12 +1,8 @@
 ---
-title: Home
+title: Some Java Code
 layout: post
 ---
 
-Headline, Title, or Introduction
-================================
-
-Some Java code:
 {% highlight java linenos %}
 import java.net.*;
 import java.io.*;
