@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/site.css" type="text/css" />
   </head>
   <body>
+    <div id="fb-root"></div>
     <div id="wrap">
       <div id="center-column">
       	<div id="nav-bar">
@@ -19,7 +20,8 @@
       	{{ content }}
 
         <div class="laterstuff">
-            <g:plusone></g:plusone>
+            <fb:like href="" send="false" layout="box_count" show_faces="false" action="like" font=""></fb:like>
+            <g:plusone size="tall"></g:plusone>
             <div id="disqus_thread"></div>
             <script type="text/javascript">
                 var disqus_shortname = 'scottfrazer';
@@ -37,6 +39,7 @@
 			</div>
     </div>
 
+    <script src="http://connect.facebook.net/en_US/all.js#appId=234959273215529&amp;xfbml=1"></script>
     <script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
     <script src="/js/libs/jquery-1.6.1.min.js"></script>
     <script src="/js/libs/jquery-ui-1.8.13.min.js"></script>
