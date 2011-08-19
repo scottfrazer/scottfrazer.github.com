@@ -9,6 +9,7 @@ Headline, Title, or Introduction
 (second post)
 
 Some Java code:
+
 {% highlight java linenos %}
 import java.net.*;
 import java.io.*;
@@ -34,3 +35,5 @@ public class serve
     }
 }
 {% endhighlight %}
+
+this is some more text!

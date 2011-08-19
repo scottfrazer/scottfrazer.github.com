@@ -3,6 +3,12 @@ title: Some Java Code
 layout: post
 ---
 
+{{ page.title }}
+================
+
+{{ page.date | date: "%B %d, %Y" }}
+-----------------------------------
+
 {% highlight java linenos %}
 import java.net.*;
 import java.io.*;
