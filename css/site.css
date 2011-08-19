@@ -70,7 +70,7 @@ body {background: url('../images/bg.png');}
 #center-column {background: #fff; width: 750px; margin: 20px auto; text-align:left; border: 2px solid #333; padding: 20px 20px;}
 #center-column h1 {font-family: Vollkorn, Georgia, serif; font-size: 2.2em;}
 #center-column h2 {margin-bottom: 20px;}
-#center-column p {padding: 2px 0;}
+#center-column p {padding: 2px 0; margin-bottom: 10px; font: 1.2em helvetica, arial, clean, sans-serif; line-height:1.50; color: #000;}
 #center-column .laterstuff {margin-top: 10px;}
 .highlight { border: 1px solid #ccc; }
 #tabs .tab .title {font-family: Vollkorn, Georgia, serif;font-size: 2.2em;font-weight: bolder; text-decoration: none; color: #333;}
