@@ -63,7 +63,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: bold; }
 a:link { -webkit-tap-highlight-color: #FF5E99; } /* j.mp/webkit-tap-highlight-color */
 /* end HTML 5 Boilerplate */
 
-body {background: url('../images/bg.png');}
+body {background: url('../images/bg.png');background-attachment: fixed;}
 #wrap {text-align:center;}
 #header {margin-bottom: 20px;}
 #nav-bar {margin-bottom: 10px;}
