@@ -1,0 +1,24 @@
+---
+title: Progress Means Practice
+layout: post
+---
+
+{{ page.title }}
+================
+
+{{ page.date | date: "%B %d, %Y" }}
+-----------------------------------
+
+For the first time in my software engineering career, I am developing software that has a lifespan.  I'm not talking about the code I write at my job, that's a different story.  What I'm talking about is my own personal projects.  Code that is 100% in my control and the future of the project is also completely up to me.  My two recent projects, Hermes and cAST, have started just like all of my other failed projects over the years.  It usually starts with a sudden burst of inspiration and motivation.  In early college, I wrote a 10000 line networked application to share and play music files.  Nothing spectacularly innovative, but it was my own project.  It was during this project that I first started noticing the rapid decay of software.  Once it sits untouched, it somehow has this way of not working any longer.  If I opened that code up now, getting it to work again as I wrote it all those years ago would be a challenge.  It's more likely than not that changes in the system configuration or APIs would make the code break outright.  If it managed to survive typical software decay, then usability would be an issue.  When I was developing it, I had a very stripped down interface to the application which I've long since forgotten.  It would be completely unintuitive where to start with this software because there is no documentation.
+
+Software decay doesn't only represent how code might break if the underlying system is changed.  It also represents how our minds tend to forget about how it works and so we have to spend a lot of time getting things back up and running.  Decay of my first software projects was incredibly evident and somewhat unsettling.  Software that I wrote 2 months ago became completely unmanageable and unusable.  I quickly learned that writing software that will resist decay was a very large challenge.  All throughout college, I was plagued by this.  Project after project would fall to the wayside over time.  It'd work initially but become unmaintainable very quickly.
+
+My longest running project was a web application to help me manage my finances while I was abroad with very little money.  The application I wrote was a great yeah to teach myself web development and for a full year I actually used the software and added features to it.  It was usable and maintainable.  I thought I had finally jumped that hurdle of code rot.  After coming back to the US, I didn't have as much use for this application so I archived it thinking that it might come in handy later.  Years later, that very thing happened and I resurrected my code to find that yet again, I had developed software that had decayed over time.  A lot was wrong with that application.  There was no clear installation, no documentation, no unit tests, and very sparse object oriented design.  The code wasn't impossible to follow, but it felt like it was written by somebody else.  Somebody who hacked together a system.
+
+It wasn't until fairly recently that I discovered two things that make the software development process work well: persistence and patience.  Persistence in software development means that there needs to be a vision and unrelenting progress toward that vision.  Having patience is the ability to realize that getting anywhere meaningful with the software is going to be a slow process that's going to involve more than just writing code that does stuff.  Planning, writing unit tests, creating documentation, and creating a build system are all part of the process.  Unfortunately, those things are often the boring part of software development and the parts that are far too easy to skip.  Why bother with all that stuff if I can just write a single Python file that does what I need it to do?
+
+As I've learned over the years, just implementing the software the easiest way possible is admitting that you don't want this software to have a lifespan.  Anybody who's written software knows that it's far more rewarding to just write the damn thing than worry about documentation and tests.  This is where we need to practice patience and strive for software that's well rounded in every way instead of hacked together.
+
+I'm by no means an expert at what I preach.  On my most recent projects, I still fall into bad habits but I am slowly replacing these bad habits with good ones.  Unit testing and documentation is hard and tedious and the benefits of having it don't pay off for a very very long time.  It was only recently when I had to do some refactoring to add a new large feature that I was glad that I had unit tests in place or else I would have never noticed the many problems my refactoring introduced.
+
+In short, practice, be patient and be persistent.  Write a LOT of software and realize that the path to good software is paved with bad software.
