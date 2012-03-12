@@ -1,0 +1,28 @@
+---
+title: Purging Unnecessary and Duplicated Concepts
+layout: post
+---
+
+{{ page.title }}
+================
+
+{{ page.date | date: "%B %d, %Y" }}
+-----------------------------------
+
+Aristotle once pondered how we're able to determine if an object is moving or at rest.  It may seem like a simple question to answer but some thought into the problem reveals that it's actually one of the most profound questions in physics.  Consider two cars driving side by side with one car going 50mph and the other going 60mph.  From an outside observer of the two cars, they're both moving rather fast.  From the point of view of the driver, the other car is moving at 10mph.  Aristotle introduced a new concept into human understanding that the earth was fixed and therefore everything moves relative to the earth.  This certainly appealed to our intuition at the time because the earth didn't *feel* like it was moving at all.  Aristotle had invented absolute space.
+
+It wasn't until many centuries later, with contributions from Copernicus and Gallileo, that we discovered that absolute space actually doesn't exist.  Motion only has meaning when comparing one object relative to another.  Dropping the concept of absolute space was vital for us to understand that the earth is actually moving at 67,000mph around the sun, yet we cannot feel this motion.
+
+The story of motion doesn't end there.  Later discoveries by Maxwell seemed to assert that the speed of light is a constant of nature.  It's value is unchanged no matter what.  This flies directly in the face of earlier breakthroughs in planetary motion which suggested that motion.  This bizzare discovery that the speed of light might be a constant of nature meant that no matter how fast you were travelling, light would always be measured at the same speed.  Even if you were travelling 99.999% the speed of light and turned on a flash light, the light from the flash light would be racing away from you at the speed of light.
+
+Scientists struggled with this.  To accomodate, a new concept was born: the ether.  The ether was a substance that permeated through all of space and it is what light travels relative to.  Introducing this concept allowed for us to keep relative motion but also explain why the speed of light is a constant of nature.
+
+There's a reason why we don't hear about 'the ether' these days.  It's because it doesn't exist.  It's often hard to tell if an abstraction is useful and accurate or if it's useful but insufficient.  It's a struggle that science and mathematics have had to deal with since the dawn of human knowledge.
+
+These principles also exist in software engineering.  The software we write is littered with abstractions we create to encapsulate behaviors we desire.  Though not all abstractions are created equally.  Consider the comparison of CVS / Subversion with Git.  They're both useful abstractions for versioning files and keeping track of history but it became clear over time that Subversion was 'the ether'.  The way Subversion handled the creation of repositories and the management of versions was just not useful.  Yes, in a lot of ways Subversion still 'gets the job done', much the same way that Aristotle's abstraction of a fixed earth was useful *in some cases*.
+
+The important thing to note is that a concept is neither right nor wrong.  It lies on a 2-dimensional sliding scale from 'useful' to 'not useful' and 'accurate' to 'not accurate'.  In science, 'useful' means that a concept has predictive power and 'accurate' means that the concept can explain what we observe.  In software engineering, an abstraction has to meet these two criteria as well.  Usefulness and accuracy should be our divining rods when adopting new software and systematically deprecating the use of old software.  I'd like to see a more scientific approach to software engineering which aims to apply rigor to the tools and concepts that we use.
+
+It's even more interesting to consider how the software we write might contain useless or duplicated abstractions that we don't even know about.  I imagine future generations of compilers and runtime environments will be smart enough to be able to actually *understand* your software and have a built-in 'theory generator' in which the runtime environment actually *figures out* what your software does and can improve on it.  What I want to see is a runtime environment that acts like a scientist rigorously performing experiments and figuring out how your software works just like what Maxwell did in his lab with a magnet and copper wire to figure out that the electric field and the magnetic field are the same concept, hence electromagnetism.  Imagine a runtime environment that could figure things out about your software before you figure it out.  Imagine a two-way converstion with the runtime environment in which it could suggest ways to simplify your software or make its abstractions simpler and more useful.
+
+To make this a reality is going to require many breakthroughs in many areas.  We essentially have to make a computer that can think and abstract for itself.  It's not hard to see what the first steps might be like.  We could engineer compilers to be able to identify if two algorithms (with no side effects) are the same and which is more efficient for a given input.  The next step might be to give the runtime environment some axioms like "always remove temporary files when they're done being used" and then through analysis, it could figure out the best places to clean up temporary files.  We're getting there with JIT compilers, but we have a long way to go before the holy grail of a compiler that understands abstractions the same way we do.
