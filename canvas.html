@@ -1,63 +1,128 @@
 <!DOCTYPE HTML>
 <html>
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>
       body {
-        margin: 0px;
+        text-align: center;
         padding: 0px;
       }
       #myCanvas {
-        border: 1px solid #9C9898;
+        margin: 0 auto;
+        border: 2px solid #333333;
+      }
+      #myDiv {
+        text-align: left;
+        margin: 0 auto;
+        width: 600px;
       }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <script>
       function writeMessage(canvas, message) {
         var context = canvas.getContext('2d');
         var x = canvas.width - 75;
         var y = canvas.height - 40;
-        context.fillRect(x,y,3,3);
-        context.clearRect(x, y, canvas.width, canvas.height);
         context.font = '12pt Calibri';
         context.fillStyle = 'black';
         context.fillText(message, x, canvas.height - 10);
       }
 
-      function getMousePos(canvas, evt) {
-        var rect = canvas.getBoundingClientRect(), root = document.documentElement;
-
-        // return relative mouse position
-        var mouseX = evt.clientX - rect.top - root.scrollTop;
-        var mouseY = evt.clientY - rect.left - root.scrollLeft;
-        return {
-          x: mouseX,
-          y: mouseY
-        };
-      }
-
       window.onload = function() {
         var canvas = document.getElementById("myCanvas");
+        document.onselectstart = function () { return false; };
         var context = canvas.getContext("2d");
         var centerX = canvas.width / 2;
         var centerY = canvas.height / 2;
-        var radius = 40;
+        var radius = 20;
+        var message = "";
+        var active_circle = null;
+        var mouse = {x:0, y:0};
+        var grid_px = 20;
+        var snapgrid = false;
+        var draw_line = false;
+        var draw_start = null;
+        var draw_end = null;
+        var new_node = false;
 
         context.lineWidth = 5;
 
-        circle0 = {
-          x: centerX + radius + 100 + radius,
-          y: centerY,
-          radius: radius
-        }
+        rectangles = [
+          {
+            x: canvas.width - 50,
+            y: 10,
+            width: 34,
+            height: 34,
+            color: "#cccccc",
+            image: "path_line.png"
+          },
+          {
+            x: canvas.width - 50,
+            y: 50,
+            width: 34,
+            height: 34,
+            color: "#cccccc",
+            image: "vector_path_circle.png"
+          }
+        ];
 
-        circle1 = {
-          x: centerX,
-          y: centerY,
-          radius: radius
-        }
+        circles = [
+          {
+            id: 0,
+            x: canvas.width / 2,
+            y: 40,
+            radius: radius,
+            color: "#00cc00"
+          },
+          {
+            id: 1,
+            x: canvas.width / 3,
+            y: 120,
+            radius: radius,
+            color: "#cc0000"
+          },
+          {
+            id: 2,
+            x: 2*(canvas.width / 3),
+            y: 120,
+            radius: radius,
+            color: "#0000cc"
+          },
+          {
+            id: 3,
+            x: canvas.width / 3,
+            y: 200,
+            radius: radius,
+            color: "#333333"
+          }
+        ];
 
-        line1 = {
-          start: circle0,
-          end: circle1
+        lines = [
+          {
+            start: circles[0],
+            end: circles[1]
+          },
+          {
+            start: circles[0],
+            end: circles[2]
+          },
+          {
+            start: circles[1],
+            end: circles[3]
+          }
+        ];
+
+        function has_edge(circle1, circle2) {
+          for (i=0;i<lines.length;i++) {
+            var line = lines[i];
+            if (line.start.id == circle1.id && line.end.id == circle2.id) {
+              return true;
+            }
+            if (line.start.id == circle2.id && line.end.id == circle1.id) {
+              return true;
+            }
+          }
+          return false;
         }
 
         function closest_point_on_circle(circle, x, y) {
@@ -70,52 +135,251 @@
         }
 
         function is_in_circle(circle, x, y) {
-          return ((x - circle.x)^2 + (y - circle.y)^2 < circle.radius^2);
+          return (Math.pow(x - circle.x, 2) + Math.pow(y - circle.y, 2) < Math.pow(circle.radius, 2));
+        }
+
+        function click_circle(circle) {
+          var edges = [];
+          for (j = 0; j < lines.length; j++) {
+            if (lines[j].start.id == circle.id) {
+              edges.push('<p><span style="color: '+circle.color+'">[Node '+circle.id+']</span> to <span style="color: '+lines[j].end.color+'">[Node ' + lines[j].end.id + ']</span></p>');
+            }
+          }
+          $('#myDiv').html('<h3 style="color:'+circle.color+'">Node '+circle.id+'</h3>color: <input type="text" id="nodecolor" value="'+circle.color+'" /><input type="button" value="change" id="nodecolor_button" /><input type="hidden" id="nodeid" value="'+circle.id+'" /><p>coordinates: ('+circle.x+', '+circle.y+')</p>Edges: '+(edges.length>0?edges.join(''):"none"));
+          $('#nodecolor_button').click(function(e) {
+            for(k=0;k<circles.length;k++) {
+              if (circles[k].id == $("#nodeid").attr('value')) {
+                circles[k].color = $('#nodecolor').attr('value');
+                redraw();
+              }
+            }
+          });
+        }
+
+        function is_in_rectangle(rectangle, x, y) {
+          return ( x >= rectangle.x && x <= rectangle.x + rectangle.width && y >= rectangle.y && y <= rectangle.y + rectangle.height );
         }
 
         function redraw() {
-          context.beginPath();
-          context.arc(circle1.x, circle1.y, circle1.radius, 0, 2 * Math.PI, false);
-          context.fillStyle = "#cc0000";
-          context.fill();
-          context.lineWidth = 5;
-          context.strokeStyle = "black";
+          context.clearRect(0,0,canvas.width,canvas.height);
+
+          if ( draw_line ) {
+            $("#myCanvas").css("cursor", "crosshair");
+            $("#myCanvas:active").css("cursor", "crosshair");
+          } else {
+            $("#myCanvas").css("cursor", "default");
+          }
+
+          for (var x = 0; x < canvas.width; x += grid_px) {
+            context.moveTo(x, 0);
+            context.lineTo(x, canvas.height);
+          }
+
+          for (var y = 0; y < canvas.height; y += grid_px) {
+            context.moveTo(0, y);
+            context.lineTo(canvas.width, y);
+          }
+
+          context.lineWidth = 1;
+          context.strokeStyle = "#eee";
           context.stroke();
 
-          context.beginPath();
-          context.arc(circle0.x, circle0.y, circle0.radius, 0, 2 * Math.PI, false);
-          context.fillStyle = "#00cc00";
-          context.fill();
-          context.lineWidth = 5;
-          context.strokeStyle = "black";
-          context.stroke();
+          if ( new_node ) {
+            context.beginPath();
+            context.arc(mouse.x, mouse.y, 20, 0, 2 * Math.PI, false);
+            context.fillStyle = "#cccccc";
+            context.fill();
+            context.lineWidth = 2;
+            context.strokeStyle = "black";
+            context.stroke();
+          }
 
-          start_coords = closest_point_on_circle(line1.start, line1.end.x, line1.end.y);
-          end_coords = closest_point_on_circle(line1.end, line1.start.x, line1.start.y);
-          context.beginPath();
-          context.moveTo(start_coords.x, start_coords.y);
-          context.lineTo(end_coords.x, end_coords.y);
-          context.lineJoin = "miter";
-          context.stroke();
+          for ( i = 0; i < circles.length; i++ ) {
+            var circle = circles[i];
+            context.beginPath();
+            context.arc(circle.x, circle.y, circle.radius, 0, 2 * Math.PI, false);
+            context.fillStyle = circle.color;
+            context.fill();
+            context.lineWidth = 2;
+            context.strokeStyle = "black";
+            context.stroke();
+          }
+
+          for ( i = 0; i < lines.length; i++ ) {
+            var line = lines[i];
+            start_coords = closest_point_on_circle(line.start, line.end.x, line.end.y);
+            end_coords = closest_point_on_circle(line.end, line.start.x, line.start.y);
+            context.beginPath();
+            context.moveTo(start_coords.x, start_coords.y);
+            context.lineTo(end_coords.x, end_coords.y);
+            context.lineJoin = "miter";
+            context.stroke();
+          }
+
+          for ( i = 0; i < rectangles.length; i++ ) {
+            var rect = rectangles[i];
+            drawing = new Image();
+            drawing.src = rect.image;
+            //context.fillStyle = rect.color;
+            //context.fillRect(rect.x, rect.y, rect.width, rect.height);
+            context.drawImage(drawing, rect.x + 5, rect.y + 5);
+            context.stroke();
+          }
+
+          if (draw_line && draw_start && draw_end) {
+            context.beginPath();
+            context.moveTo(draw_start.x, draw_start.y);
+            context.lineTo(draw_end.x, draw_end.y);
+            context.lineJoin = "miter";
+            context.stroke();
+          }
+
+          writeMessage(canvas, message);
         }
 
         redraw();
 
-        canvas.addEventListener('mousemove', function(evt) {
-          var mousePos = getMousePos(canvas, evt);
-          var message = "(" +mousePos.x + "," + mousePos.y + ")";
-          writeMessage(canvas, message);
+        canvas.addEventListener('mousemove', function(e) {
+
+          if ( e.offsetX ) {
+            mouse.x = e.offsetX;
+            mouse.y = e.offsetY;
+          }
+          else if( e.layerX ) {
+            mouse.x = e.layerX;
+            mouse.y = e.layerY;
+          }
+
+          if ( new_node ) {
+            redraw();
+          }
+
+          if (draw_line) {
+            draw_end = {x: mouse.x, y: mouse.y};
+            redraw();
+          }
+
+          if (active_circle) {
+            if ( !snapgrid || mouse.x % grid_px == 0 ) {
+              active_circle.x = mouse.x;
+              redraw();
+            }
+
+            if ( !snapgrid || mouse.y % grid_px == 0 ) {
+              active_circle.y = mouse.y;
+              redraw();
+            }
+          }
         }, false);
         
+        canvas.addEventListener('mousedown', function(evt) {
+
+          var in_rectangle = false;
+          for ( i = 0; i < rectangles.length; i++ ) {
+            var rect = rectangles[i];
+            if ( is_in_rectangle(rect, mouse.x, mouse.y) ) {
+              in_rectangle = true;
+            }
+          }
+
+          if (new_node && !in_rectangle) {
+            var id = 0;
+            for (i=0;i<circles.length;i++) {
+              if (circles[i].id > id) {
+                id=circles[i].id;
+              }
+            }
+            circles.push({
+              id: id+1,
+              x: mouse.x,
+              y: mouse.y,
+              radius: radius,
+              color: "#cccccc"
+            });
+            new_node = false;
+          }
+
+          if (draw_line) {
+            draw_start = {x: mouse.x, y: mouse.y};
+            redraw();
+            return false;
+          }
+
+          for ( i = 0; i < circles.length; i++ ) {
+            var circle = circles[i];
+            if ( is_in_circle(circle, mouse.x, mouse.y) ) {
+              active_circle = circle;
+            }
+          }
+
+          redraw();
+        }, false);
+
+        canvas.addEventListener('mouseup', function(evt) {
+          active_circle = null;
+          if ( draw_line ) {
+            start_node = end_node = null;
+            for ( i = 0; i < circles.length; i++ ) {
+              var circle = circles[i];
+              if ( is_in_circle(circle, draw_start.x, draw_start.y) ) {
+                start_node = circle;
+              }
+              if ( is_in_circle(circle, draw_end.x, draw_end.y) ) {
+                end_node = circle;
+              }
+            }
+
+            if ( start_node != end_node && start_node != null && end_node != null ) {
+              if (!has_edge(start_node, end_node)) {
+                lines.push({start: start_node, end: end_node});
+                console.log("edge added");
+              }
+            }
+            draw_start = draw_end = null;
+          }
+          redraw();
+        }, false);
+
         canvas.addEventListener('click', function(evt) {
-          var mousePos = getMousePos(canvas, evt);
-          var message = "c(" +mousePos.x + "," + mousePos.y + ")";
-          writeMessage(canvas, message);
+          var rect = rectangles[0];
+          if ( is_in_rectangle(rect, mouse.x, mouse.y) ) {
+            if (draw_line) {
+              rect.color = '#cccccc';
+              draw_line = false;
+            } else {
+              rect.color = '#cc0000';
+              draw_line = true;
+              new_node = false;
+            }
+          }
+
+          for ( i = 0; i < circles.length; i++ ) {
+            var circle = circles[i];
+            if ( is_in_circle(circle, mouse.x, mouse.y) ) {
+              click_circle(circle);
+            }
+          }
+
+          rect = rectangles[1];
+          if ( is_in_rectangle(rect, mouse.x, mouse.y) ) {
+            if (new_node) {
+              rect.color = '#cccccc';
+              new_node = false;
+            } else {
+              new_node = true;
+              draw_line = false;
+            }
+          }
+
+          if (new_node) rectangles[1].color = '#cc0000'; else rectangles[1].color = '#cccccc';
+          if (draw_line) rectangles[0].color = '#cc0000'; else rectangles[0].color = '#cccccc';
+          redraw();
         }, false);
       };
     </script>
   </head>
   <body>
-    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <canvas id="myCanvas" width="600" height="400"></canvas>
+    <div id="myDiv"></div>
   </body>
 </html>
