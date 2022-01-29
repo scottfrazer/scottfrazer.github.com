@@ -1,7 +1,0 @@
----
-active_modules: [pygments, tags, blog, latex]
-author: Scott Frazer
-canonical_url: http://scottfrazer.net/
-modules:
-  pygments:
-    style: tango
